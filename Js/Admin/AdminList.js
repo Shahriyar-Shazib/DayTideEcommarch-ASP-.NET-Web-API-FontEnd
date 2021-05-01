@@ -36,7 +36,6 @@ $.ajax({
 });
 function notifyad(id)
 {
-   // var v=document.getElementById("#notifyAd").value;
-    alert(id);     
+   // var v=document.getElementById("#notifyAd").value;  
    window.location = '../../Views/Admin/Notify.html?userid='+id;
 }

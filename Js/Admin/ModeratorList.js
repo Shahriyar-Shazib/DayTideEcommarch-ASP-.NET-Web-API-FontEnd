@@ -10,15 +10,15 @@ $(document).ready(function(){
                     var str='';
                     var str1='';
                     var data=xmlhttp.responseJSON;
-                  //document.write(data[0].user.status);
+                    //document.write(data[0].user.status);
                     for(var i=0;i<data.length;i++)
                     {
                         if (data[i].user.status=="valid"){
-                            //document.write(data[0].user.status)
+                            
     
                             str+="<tr><td>"+data[i].moderator.name+"</td><td>"+data[i].moderator.email+"</td><td>"+data[i].moderator.phone+"</td><td>"+data[i].moderator.address+"</td><td>"+data[i].moderator.salary+"</td>";
-                            str+="<td><button id='notifydel' class='btn btn-primary' href='Notify/"+data[i].moderator.delManId+"'>Notify</button>";
-                            str+="<button id='Detaildel' class='btn btn-primary' href='Notify/"+data[i].moderator.delManId+"'>Detail</button>";
+                            str+="<td><button id='notifymod' style='margin-right:5px;'class='btn btn-primary'onclick='notifymod("+JSON.stringify(data[i].moderator.moderatorId)+")'>Notify</button>";
+                            str+="<button id='Detailmod' class='btn btn-primary'onclick='detailmod("+JSON.stringify(data[i].moderator.moderatorId)+")'>Detail</button>";
                             str+="</td></tr>";
                         }
                        
@@ -32,7 +32,7 @@ $(document).ready(function(){
                         if (data[i].user.status=="invalid"){
 
                             str1+="<tr><td>"+data[i].moderator.name+"</td><td>"+data[i].moderator.email+"</td><td>"+data[i].moderator.phone+"</td><td>"+data[i].moderator.address+"</td>><td>"+data[i].moderator.salary+"</td>";
-                            str1+="<td><button id='UnBlockdel' class='btn btn-primary' href='Notify/"+data[i].moderator.delManId+"'>UnBlock</button>";
+                            str1+="<td><button id='UnBlockdel' style='margin-right:5px'class='btn btn-primary'onclick='Unblockmod("+JSON.stringify(data[i].moderator.moderatorId)+")'>UnBlock</button>";
                             str1+="<button id='Deletedel' class='btn btn-primary' href='Notify/"+data[i].moderator.delManId+"'>Delete</button>";
                             str1+="</td></tr>";
                         }
@@ -53,3 +53,31 @@ $(document).ready(function(){
     });
     
     });
+    function notifymod(id)
+    {
+       // var v=document.getElementById("#notifyAd").value;  
+       window.location = '../../Views/Admin/Notify.html?userid='+id;
+    }
+    function detailmod(id)
+    {
+       // var v=document.getElementById("#notifyAd").value;  
+       window.location = '../../Views/Admin/DetailModerator.html?id='+id;
+    }
+    function Unblockmod(id)
+    {
+        $.ajax({
+            url:"http://localhost:2293//api/Admin/UnBlockmod?id="+id,
+            method:"GET",
+            complete: function(xmlhttp,status){
+                {
+                    
+                    if(xmlhttp.status==200)
+                    {
+                        window.location = '../../Views/Admin/ModeratorList.html';
+                    }
+                    else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
+                }
+            }
+        
+        });
+    }

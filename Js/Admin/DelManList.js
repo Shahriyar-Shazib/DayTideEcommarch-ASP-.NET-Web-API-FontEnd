@@ -16,8 +16,8 @@ $(document).ready(function(){
                             //document.write(data[0].user.status)
     
                             str+="<tr><td>"+data[i].deliveryMan.name+"</td><td>"+data[i].deliveryMan.email+"</td><td>"+data[i].deliveryMan.phone+"</td><td>"+data[i].deliveryMan.address+"</td><td>"+data[i].deliveryMan.salary+"</td>";
-                            str+="<td><button id='notifydel' class='btn btn-primary' href='Notify/"+data[i].deliveryMan.delManId+"'>Notify</button>";
-                            str+="<button id='Detaildel' class='btn btn-primary' href='Notify/"+data[i].deliveryMan.delManId+"'>Detail</button>";
+                            str+="<td><button id='notifydel'style='margin-right:5px' class='btn btn-primary'onclick='notifydel("+JSON.stringify(data[i].deliveryMan.delManId)+")'>Notify</button>";
+                            str+="<button id='notifydel' class='btn btn-primary'onclick='detaildel("+JSON.stringify(data[i].deliveryMan.delManId)+")'>Detail</button>";
                             str+="</td></tr>";
                         }
                        
@@ -52,3 +52,13 @@ $(document).ready(function(){
     });
     
     });
+    function notifydel(id)
+    {
+       // var v=document.getElementById("#notifyAd").value;  
+       window.location = '../../Views/Admin/Notify.html?userid='+id;
+    }
+    function detaildel(id)
+    {
+       // var v=document.getElementById("#notifyAd").value;  
+       window.location = '../../Views/Admin/DetailDelman.html?id='+id;
+    }
