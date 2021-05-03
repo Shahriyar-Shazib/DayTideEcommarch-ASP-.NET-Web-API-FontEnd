@@ -1,6 +1,12 @@
 $(document).ready(function(){
     var sParam = new URLSearchParams(window.location.search)
-    
+    var type=getCookie("Type");
+    if(type!='Admin')
+    {
+        window.location='../../Views/Login/index.html'
+    }
+    else
+    {
     $.ajax({
         url:"http://localhost:2293//api/Admin/DetailModerator?"+sParam,
         complete: function(xmlhttp,status){
@@ -59,7 +65,7 @@ $(document).ready(function(){
         }
     
     });
-    
+}
     });
     function blockmod(id)
     {
@@ -94,7 +100,7 @@ $(document).ready(function(){
     {
         $.ajax({
             url:"http://localhost:2293//api/Admin/Deletemod?id="+id,
-            method:"GET",
+            method:"DELETE",
             complete: function(xmlhttp,status){
                 {
                     
@@ -109,3 +115,13 @@ $(document).ready(function(){
     })
 }
     
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}

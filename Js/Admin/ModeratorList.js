@@ -1,4 +1,11 @@
 $(document).ready(function(){
+    var type=getCookie("Type");
+    if(type!='Admin')
+    {
+        window.location='../../Views/Login/index.html'
+    }
+    else
+    {
     $.ajax({
         url:"http://localhost:2293//api/Admin/ModeratorList",
         Method:'GET',
@@ -33,8 +40,8 @@ $(document).ready(function(){
 
                             str1+="<tr><td>"+data[i].moderator.name+"</td><td>"+data[i].moderator.email+"</td><td>"+data[i].moderator.phone+"</td><td>"+data[i].moderator.address+"</td>><td>"+data[i].moderator.salary+"</td>";
                             str1+="<td><button id='UnBlockdel' style='margin-right:5px'class='btn btn-primary'onclick='Unblockmod("+JSON.stringify(data[i].moderator.moderatorId)+")'>UnBlock</button>";
-                            str1+="<button id='Deletedel' class='btn btn-primary' href='Notify/"+data[i].moderator.delManId+"'>Delete</button>";
-                            str1+="</td></tr>";
+                            str1+="<button id='Deletemod' class='btn btn-primary'id='blockdel'onclick='DeleteMod("+JSON.stringify(data[i].moderator.moderatorId)+")'>Delete</button>";
+                           str1+="</td></tr>";
                         }
                     
                         //str+="<td>"+data.AdminId+"</td>";
@@ -51,7 +58,7 @@ $(document).ready(function(){
         }
     
     });
-    
+}
     });
     function notifymod(id)
     {
@@ -81,3 +88,31 @@ $(document).ready(function(){
         
         });
     }
+    function DeleteMod(id)
+    {
+        $.ajax({
+            url:"http://localhost:2293//api/Admin/Deletemod?id="+id,
+            method:"DELETE",
+            complete: function(xmlhttp,status){
+                {
+                    
+                    if(xmlhttp.status==200)
+                    {
+                        window.location = '../../Views/Admin/ModeratorList.html';
+                    }
+                    else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
+                }
+            }
+        
+    })
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}

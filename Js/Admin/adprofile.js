@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var sParam = new URLSearchParams(window.location.search)
+    
     var type=getCookie("Type");
     if(type!='Admin')
     {
@@ -7,8 +7,9 @@ $(document).ready(function(){
     }
     else
     {
+        $("#uname").text(getCookie("userid"))
     $.ajax({
-        url:"http://localhost:2293//api/Admin/DetailCus?"+sParam,
+        url:"http://localhost:2293//api/Admin/Adprofile?id="+getCookie("userid"),
         complete: function(xmlhttp,status){
             {
                 
@@ -17,12 +18,20 @@ $(document).ready(function(){
                     var str='';
                    
                     var data=xmlhttp.responseJSON;
-                    //document.write(data.customerId);
+                   // document.write(data.name);
                     
                         
-                            //document.write(data[0].user.status)
-    
-                            str+="<dl class='dl-horizontal'>";
+                           // document.write(data.links)
+                            str+="<tr><td>"
+                            str+="   <img class='img-profile ' style='height: 400px; width: 450px; margin-left: 40px ;";
+                            str+="       src='~/Content/Users/"+data.picture+"'>" ;
+                            str+="</td>"
+
+                            str+="<td><dl style ='margin-left:30px'class='dl-horizontal'>";
+                            str+="<dt>AdminId</dt>";
+
+                            str+="<dd>"+data.adminId+"</dd>";
+
                             str+="<dt>Name</dt>";
 
                             str+="<dd>"+data.name+"</dd>";
@@ -39,11 +48,16 @@ $(document).ready(function(){
 
                             str+="<dd>"+data.address+"</dd>";
 
-                            str+="</dl>";
-                        
-                            
+                            str+=" <dt>Salary</dt>";
+
+                            str+="<dd>"+data.address+"</dd>";
+
+
+                            str+="</dl></td></tr>";
+                            str+="<tr><td colspan='2'style='text-align:center;'><button style='margin-top:15px;background-color:orange;color:black'id='blockmod'onclick='EditBio("+JSON.stringify(data.adminId)+")'class='btn btn-primary'>EditBio</button>"
+                            str+="</td></tr>" ;
                     
-                    $("#detailcus").html(str);
+                    $("#detailadmin").html(str);
   
                 }
                 
@@ -55,16 +69,6 @@ $(document).ready(function(){
     });
 }
     });
-    function notifydel(id)
-    {
-       // var v=document.getElementById("#notifyAd").value;  
-       window.location = '../../Views/Admin/Notify.html?userid='+id;
-    }
-    function detaildel(id)
-    {
-       // var v=document.getElementById("#notifyAd").value;  
-       window.location = '../../Views/Admin/DetailDelman.html?userid='+id;
-    }
     function getCookie(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
@@ -74,4 +78,8 @@ $(document).ready(function(){
             if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
+    }
+    function EditBio(id)
+    {
+        window.location="../../Views/Admin/EditBio.html?id="+id;
     }

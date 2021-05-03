@@ -7,11 +7,12 @@ $(document).ready(function(){
     }
     else
     {
+    
    // document.write(sParam);
     //$("#send_For").text(sParam[userid]);
 
     $.ajax({
-        url:"http://localhost:2293//api/Admin/updatesalmod/?"+sParam+"&id="+getCookie("userid"),
+        url:"http://localhost:2293//api/Admin/updatesalDeletedelman/?"+sParam+"&id="+getCookie("userid"),
         complete: function(xmlhttp,status){
             {
                 
@@ -24,8 +25,8 @@ $(document).ready(function(){
                     
                     
                     str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
-                    str+="<label for='Message' class='form-label'>Moderator Id</label>";
-                    str+="<input type='text'' value="+JSON.stringify(data.moderatorId)+" class='form-control' id='moderatorId' aria-describedby='moderatorId'readonly>";
+                    str+="<label for='Message' class='form-label'>DeliveryMan Id</label>";
+                    str+="<input type='text'' value="+JSON.stringify(data.delManId)+" class='form-control' id='moderatorId' aria-describedby='moderatorId'readonly>";
                       
                     str+="</div>";
                     str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
@@ -48,15 +49,28 @@ $(document).ready(function(){
                     str+="  <input type='text' value="+JSON.stringify(data.address)+"class='form-control' id='addr' aria-describedby='add'readonly>";
                         
                     str+=" </div>";
+
+                    str+=" <div class='mb-3'style='margin-left:10%;margin-right:10%'>";
+                    str+="   <label for='send_By' class='form-label'>Complete Task</label>";
+                    str+="  <input type='text' class='form-control'value="+JSON.stringify(data.complete_Task)+" id='complete_Task'readonly aria-describedby='complete_Task'>";
+                        
+                    str+="</div>";
+
+                    str+=" <div class='mb-3'style='margin-left:10%;margin-right:10%'>";
+                    str+="   <label for='send_By' class='form-label'>In Service</label>";
+                    str+="  <input type='text' class='form-control'value="+JSON.stringify(data.in_Service)+" id='in_Service' aria-describedby='in_Service'readonly>";
+                        
+                    str+="</div>";
+
                     str+=" <div class='mb-3'style='margin-left:10%;margin-right:10%'>";
                     str+="   <label for='send_By' class='form-label'>Salary</label>";
                     str+="  <input type='text' class='form-control'value="+JSON.stringify(data.salary)+" id='sal' aria-describedby='sal'>";
                         
                     str+="</div>";
-                    str+=" <button style='margin-left:45%' onclick=update('shah-12') id='updatesalmodbtn'class='btn btn-primary col-md-offset-2'>Update</button>";
+                    str+=" <button style='margin-left:45%' onclick=update('shah-12') id='updatesaldelbtn'class='btn btn-primary col-md-offset-2'>Update</button>";
                     
                
-                    $("#updatesalmod").html(str);
+                    $("#updatesaldel").html(str);
                     
                 }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
@@ -78,16 +92,18 @@ function update(id)
         else {
             
     $.ajax({
-        url:"http://localhost:2293//api/Admin/updatesalmod/?id="+id,
+        url:"http://localhost:2293//api/Admin/updatesalDeletedelman/?id="+id,
         method:"PUT",
         headers:"Content-Type:application/json",
         data:{
-            "moderatorId":  $("#moderatorId").val(),
+            "delManId":  $("#moderatorId").val(),
             "name":  $("#name").val(),
             "email": $("#email").val(),
             "phone": $("#phone").val(),
             "address":  $("#addr").val(),
             "salary": $("#sal").val(),
+            "complete_Task":$("#complete_Task").val() ,
+            "in_Service": $("#in_Service").val()
             
         },
         complete: function(xmlhttp,status){
@@ -95,7 +111,7 @@ function update(id)
                 
                 if(xmlhttp.status==200)
                 {
-                    window.location.replace('../../Views/Admin/ModeratorList.html') ;
+                    window.location.replace('../../Views/Admin/DeleveryManList.html') ;
                     //$("#msg").html(xmlhttp.status+":"+xmlhttp.statusText)
                 }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
