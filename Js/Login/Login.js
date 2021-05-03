@@ -1,6 +1,7 @@
 function login(){
     var UserID =$("#userid").val();
     var pass =$("#pass").val();
+
     //document.write(UserID)
     $.ajax({
         url:"http://localhost:2293//api/Login/login/?id="+UserID+"&pass="+pass,
@@ -22,6 +23,10 @@ function login(){
                    if(data.type=="Admin")
                    {
                       window.location="../../Views/Admin/AdminHome.html"
+                   }else if(data.type=="Moderator"){
+                        window.location="../../Views/Moderator/ModeratorHome.html"
+                   }else{
+                        window.location="../../Views/DeliveryMan/home.html"
                    }
 
                 }
