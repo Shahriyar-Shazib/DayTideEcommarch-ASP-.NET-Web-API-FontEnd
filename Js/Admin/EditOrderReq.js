@@ -12,6 +12,9 @@ $(document).ready(function(){
 
     $.ajax({
         url:"http://localhost:2293//api/Admin/Editdelreq/?"+sParam,
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -67,6 +70,10 @@ $(document).ready(function(){
                     $("#processDeliveryreq").html(str);
                     
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }
@@ -79,6 +86,9 @@ function deleveryManName(add)
     //document.write(add);
     $.ajax({
          url:"http://localhost:2293//api/Admin/Finddelmanonadd?add="+add,
+         headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
          method:'GET',
          complete: function(xmlhttp,status){
              {
@@ -103,7 +113,10 @@ function deleveryManName(add)
                      $("#name").text("Loaded")
 
                  }
-                
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index"
+                }
  
                  else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
              }
@@ -129,6 +142,9 @@ function Accept()
 $.ajax({
     url:"http://localhost:2293//api/Admin/Editdelreq/?DelManId="+delmanid,
     method:"POST",
+    headers:{
+        "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+    },
     headers:"Content-Type:application/json",
     data:{
         "orderId":$("#orderId").val(),
@@ -147,6 +163,10 @@ $.ajax({
             {
                 window.location.replace('../../Views/Admin/OrderRequest.html') ;
                 //$("#msg").html(xmlhttp.status+":"+xmlhttp.statusText)
+            }
+            else if(xmlhttp.status==401)
+            {
+                window.location="../../Views/Login/index.html"
             }
             else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
         }

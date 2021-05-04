@@ -7,9 +7,9 @@ $(document).ready(function(){
     else{
         $.ajax({
             url:"http://localhost:2293//api/Admin/AdminList",
-           // Header:{
-             //   Authorization:"Basic "+btoa("Admin:111")
-           // },
+            headers:{
+                "Authorization":"Basic "+btoa("Admin:111")
+            },
             //getCookie("Type"+":"+getCookie("userid")+":"+getCookie("pass")
             complete: function(xmlhttp,status){
                 {
@@ -35,7 +35,9 @@ $(document).ready(function(){
                         $("#adminlist tbody").html(str);
                         
                     }
-                    else if(xmlhttp.status==401){}
+                    else if(xmlhttp.status==401){
+                        
+                    }
                     else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
                 }
             }

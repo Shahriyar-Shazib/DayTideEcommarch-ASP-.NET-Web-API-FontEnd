@@ -13,6 +13,9 @@ $(document).ready(function(){
 
     $.ajax({
         url:"http://localhost:2293//api/Admin/EditNotice/?"+sParam,
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -45,6 +48,9 @@ $(document).ready(function(){
                     $("#editnotify").html(str);
                     
                 }
+                else if(xmlhttp.status==401){
+                    window.location="../../Views/Login/index.html"
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }
@@ -66,6 +72,9 @@ function post()
         
 $.ajax({
     url:"http://localhost:2293//api/Admin/Notify",
+    headers:{
+        "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+    },
     method:"POST",
     headers:"Content-Type:application/json",
     data:{
@@ -80,6 +89,9 @@ $.ajax({
             if(xmlhttp.status==201)
             {
                 window.location="../../Views/Admin/PostedNotification.html"
+            }
+            else if (xmlhttp.status==401){
+                window.location="../../Views/Login/index.html";
             }
             else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
         }

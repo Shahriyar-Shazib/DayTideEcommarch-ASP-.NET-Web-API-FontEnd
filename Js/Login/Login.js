@@ -1,10 +1,10 @@
 function login(){
     var UserID =$("#userid").val();
     var pass =$("#pass").val();
-
     //document.write(UserID)
     $.ajax({
         url:"http://localhost:2293//api/Login/login/?id="+UserID+"&pass="+pass,
+       
        Method:"GET",
         complete: function(xmlhttp,status){
             {
@@ -23,10 +23,6 @@ function login(){
                    if(data.type=="Admin")
                    {
                       window.location="../../Views/Admin/AdminHome.html"
-                   }else if(data.type=="Moderator"){
-                        window.location="../../Views/Moderator/ModeratorHome.html"
-                   }else{
-                        window.location="../../Views/DeliveryMan/home.html"
                    }
 
                 }
@@ -45,6 +41,7 @@ function login(){
     
     });
 }
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');

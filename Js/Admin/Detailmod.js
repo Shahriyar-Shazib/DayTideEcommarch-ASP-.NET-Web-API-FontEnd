@@ -9,6 +9,9 @@ $(document).ready(function(){
     {
     $.ajax({
         url:"http://localhost:2293//api/Admin/DetailModerator?"+sParam,
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -59,7 +62,9 @@ $(document).ready(function(){
   
                 }
                 
-            
+                else if(xmlhttp.status==401){
+                    window.location="../../Views/Login/index.html";
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }
@@ -72,6 +77,9 @@ $(document).ready(function(){
                  
     $.ajax({
         url:"http://localhost:2293//api/Admin/Blockmod?id="+id,
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         method:"GET",
         complete: function(xmlhttp,status){
             {
@@ -79,6 +87,10 @@ $(document).ready(function(){
                 if(xmlhttp.status==200)
                 {
                     window.location = '../../Views/Admin/ModeratorList.html';
+                }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
                 }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
@@ -100,6 +112,9 @@ $(document).ready(function(){
     {
         $.ajax({
             url:"http://localhost:2293//api/Admin/Deletemod?id="+id,
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             method:"DELETE",
             complete: function(xmlhttp,status){
                 {
@@ -107,6 +122,9 @@ $(document).ready(function(){
                     if(xmlhttp.status==200)
                     {
                         window.location = '../../Views/Admin/ModeratorList.html';
+                    }
+                    else if(xmlhttp.status==401){
+                        window.location="../../Views/Login/index.html"
                     }
                     else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
                 }

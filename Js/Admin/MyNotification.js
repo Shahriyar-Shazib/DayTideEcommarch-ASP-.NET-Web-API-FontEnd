@@ -9,6 +9,9 @@ $(document).ready(function(){
     
     $.ajax({
         url:"http://localhost:2293//api/Admin/Mynotification/?id="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -54,6 +57,10 @@ $(document).ready(function(){
 
                     
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
+                }
 
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
@@ -65,6 +72,9 @@ $(document).ready(function(){
 function view(id){
     $.ajax({
         url:"http://localhost:2293//api/Admin/viewFullMassege?id="+id,
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         Method:"GET",
         complete: function(xmlhttp,status){
             {
@@ -75,6 +85,10 @@ function view(id){
                  //   window.location="../../Views/Admin/PostedNotification.html"
 
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
+                }
 
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
@@ -82,9 +96,7 @@ function view(id){
     
     });
 }
-function deletenoti(id){
-   
-}
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');

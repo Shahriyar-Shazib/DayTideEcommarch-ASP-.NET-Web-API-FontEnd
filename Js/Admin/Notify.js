@@ -13,6 +13,9 @@ $(document).ready(function(){
 
     $.ajax({
         url:"http://localhost:2293//api/Admin/Notify/?"+sParam+"&id="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -45,6 +48,10 @@ $(document).ready(function(){
                     $("#notify").html(str);
                     
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }
@@ -68,6 +75,9 @@ $(document).ready(function(){
     $.ajax({
         url:"http://localhost:2293//api/Admin/Notify",
         method:"POST",
+        headers:{
+            "Authorization":"Basic "+btoa('"'+getCookie("Type")+':'+getCookie("userid")+':'+getCookie("pass")+'"')
+        },
         headers:"Content-Type:application/json",
         data:{
             "massage": $("#Message").val(),
@@ -82,6 +92,9 @@ $(document).ready(function(){
                 {
                     $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText)
                 }
+               // else if(xmlhttp.status==401){
+                //     window.location="../../Views/Login/index.html"
+                // }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }

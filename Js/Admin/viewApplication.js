@@ -9,6 +9,9 @@ $(document).ready(function(){
         $("#uname").text(getCookie("userid"))
     $.ajax({
         url:"http://localhost:2293//api/Admin/viewApplication",
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -63,6 +66,10 @@ $(document).ready(function(){
 
 
                 }
+                else if (xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html";
+                }
 
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
@@ -74,6 +81,9 @@ $(document).ready(function(){
 function AcceptApplication(id){
     $.ajax({
         url:"http://localhost:2293//api/Admin/applicationAccept/?id="+id+"&userid="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         Method:"GET",
         complete: function(xmlhttp,status){
             {
@@ -83,7 +93,10 @@ function AcceptApplication(id){
                     window.location="../../Views/Admin/viewApplication.html"
 
                 }
-
+                else if (xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html";
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }
@@ -93,6 +106,9 @@ function AcceptApplication(id){
 function RejectApplication(id){
     $.ajax({
         url:"http://localhost:2293//api/Admin/applicationReject/?id="+id+"&userid="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         Method:"GET",
         complete: function(xmlhttp,status){
             {
@@ -102,7 +118,10 @@ function RejectApplication(id){
                     window.location="../../Views/Admin/viewApplication.html"
 
                 }
-
+                else if (xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html";
+                }
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
         }

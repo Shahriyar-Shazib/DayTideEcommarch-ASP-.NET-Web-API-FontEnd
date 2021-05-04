@@ -1,7 +1,9 @@
 <section>
     <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary ">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Day Tide</a>
+          <a class="navbar-brand" href="#" readonly>
+            <i class="fab fa-yelp"></i>
+            Day Tide</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -93,15 +95,15 @@
                         </a>
 
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/Logout" data-toggle="modal" data-target="#logoutModal">
+                        <a class="dropdown-item"  data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/Logout" data-toggle="modal" data-target="#ChangepassModal">
                             Change Password
                         </a>
-                    </div>
+                    </div> -->
 
                 </li>
 
@@ -111,7 +113,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
+     <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -125,12 +127,12 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="/Login/Logout">Logout</a>
+                    <a class="btn btn-primary" onclick=logout()>Logout</a>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="ChangepassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    </div> 
+    <!-- <div class="modal fade" id="ChangepassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -146,7 +148,19 @@
                     <a class="btn btn-primary" href="/ChangePassword/Index">Change Password</a>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </section>
+<script>
+  function logout()
+  {
+    eraseCookie("userid")
+    eraseCookie("pass")
+    eraseCookie("Type")
+    window.location="../Login/index.html"
+  }
+function eraseCookie(name) {   
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+</script>

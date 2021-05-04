@@ -39,6 +39,9 @@ function Insertad()
             url:"http://localhost:2293//api/Admin/AddAdmin/",
             method:"POST",
             headers:"Content-Type:application/json",
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             data:{
                 "adminId": $("#adminId").val(),
                 "name": $("#name").val(),
@@ -60,6 +63,9 @@ function Insertad()
                     else if(xmlhttp.status==406)
                     {
                         $("#validationerr").text("**AdminId Already Taken Or InValid UserID**")
+                    }
+                    else if(xmlhttp.status==401){
+                        window.location="../../Views/Login/index.html"
                     }
                     else $("#validationerr").html(xmlhttp.status+":"+xmlhttp.statusText);
                 }
@@ -100,6 +106,9 @@ function Insertdelman()
             url:"http://localhost:2293//api/Admin/AddDelMan/",
             method:"POST",
             headers:"Content-Type:application/json",
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             data:{
                 "delManId": $("#delManId").val(),
                 "name": $("#name").val(),
@@ -123,6 +132,9 @@ function Insertdelman()
                     else if(xmlhttp.status==406)
                     {
                         $("#validationerr").text("**DeliveryManId Already Taken Or InValid UserID**")
+                    }
+                    else if(xmlhttp.status==401){
+                        window.location="../../Views/Login/index.html"
                     }
                     else $("#validationerr").html(xmlhttp.status+":"+xmlhttp.statusText);
                 }
@@ -163,6 +175,9 @@ function Insertmod()
             url:"http://localhost:2293//api/Admin/AddModerator/",
             method:"POST",
             headers:"Content-Type:application/json",
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             data:{
                 "moderatorId": $("#modId").val(),
                 "name": $("#name").val(),
@@ -184,6 +199,9 @@ function Insertmod()
                     else if(xmlhttp.status==406)
                     {
                         $("#validationerr").text("**ModeratorId Already Taken Or InValid UserID**")
+                    }
+                    else if(xmlhttp.status==401){
+                        window.location="../../Views/Login/index.html"
                     }
                     else $("#validationerr").html(xmlhttp.status+":"+xmlhttp.statusText);
                 }

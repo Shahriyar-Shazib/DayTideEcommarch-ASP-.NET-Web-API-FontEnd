@@ -10,6 +10,9 @@ $(document).ready(function(){
         $("#uname").text(getCookie("userid"))
     $.ajax({
         url:"http://localhost:2293//api/Admin/EditBio?id="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -22,12 +25,15 @@ $(document).ready(function(){
                     
                         
                            // document.write(data.links)
-                          
-                           str+="<div id='pic'>";
-                            str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
-                            str+=" <label for='Message' class='form-label'>Picture</label>";
-                            str+="  <input type='file'' value="+data.picture+" class='form-control' id='pic' aria-describedby='moderatorId'>";
-                            str+="</div><div id='adadmin'>";
+                           
+                                                    
+                        //    str+="<div id='pic'>";
+                        //     str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
+                        //     str+=" <label for='Message' class='form-label'>Picture</label>";
+                        //     str+="<input type='file' id='file' name='files' />"
+                        //     //str+="  <input type='file'' value="+data.picture+" class='form-control' name='files' id='files' aria-describedby='moderatorId'>";
+                        //     str+="<textarea id='base64' rows='5'></textarea>";
+                            str+="<div id='adadmin'>";
                             str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
                             str+=" <label for='Message' class='form-label'>Admin Id</label>";
                             str+="  <input type='text'' value="+data.adminId+" class='form-control' id='adminId' aria-describedby='moderatorId'readonly>";
@@ -55,7 +61,7 @@ $(document).ready(function(){
                             str+="</div>";
                             str+="<div class='mb-3'style='margin-left:10%;margin-right:10%'>";
                             str+=" <label for='sal' class='form-label'hidden>Salary</label>";
-                            str+="   <input type='text' value="+data.salary+" class='form-control' id='sal' aria-describedby='add'hidden></div>";
+                            str+="   <input type='text' value="+data.salary+" class='form-control' id='sal' aria-describedby='sal'hidden></div>";
                             str+=" <button style='margin-left:45%;margin-bottom:50px;margin-top:45px' onclick=updatetad() id='updatead'class='btn btn-primary col-md-offset-2'>Update</button>";
                               
                           
@@ -67,6 +73,10 @@ $(document).ready(function(){
                     $("#editadmin").html(str);
   
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html"
+                }
                 
             
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
@@ -76,13 +86,17 @@ $(document).ready(function(){
     });
 }
     });
-    function Insertad()
+    function updatetad()
 {
     //document.write("All The Field Must be Inserted");
     if($("#name").val()==='')
     {
         $("#validationerr").text("**Name Field Must be Inserted**")
     }
+    // else if($("#files").val()!==null)
+    // {
+         
+    // }
     else if($("#email").val()==='')
     {
         $("#validationerr").text("**Email  Field Must be Inserted**")
@@ -101,7 +115,10 @@ $(document).ready(function(){
     }
     else{
         $.ajax({
-            url:"http://localhost:2293//api/Admin/AddAdmin/",
+            url:"http://localhost:2293//api/Admin/EditBio/",
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             method:"PUT",
             headers:"Content-Type:application/json",
             data:{
@@ -111,16 +128,20 @@ $(document).ready(function(){
                 "phone": $("#phone").val(),
                 "address":$("#addr").val(),
                 "salary":$("#sal").val(),
-                "picture": ""
+                "picture": $("#base64").val()
                     
             },
             complete: function(xmlhttp,status){
                 {
                     
-                    if(xmlhttp.status==200)
+                    if(xmlhttp.status==201)
                     {
-                        window.location.replace('../../Views/Admin/AdminList.html') ;
+                        window.location.replace('../../Views/Admin/Adprofile.html') ;
                         //$("#msg").html(xmlhttp.status+":"+xmlhttp.statusText)
+                    }
+                    else if(xmlhttp.status==401)
+                    {
+                        window.location="../../Views/Login/index.html"
                     }
                     else if(xmlhttp.status==406)
                     {
@@ -143,3 +164,9 @@ $(document).ready(function(){
         }
         return null;
     }
+ 
+    // $("files").on('focusout',function(){
+    //     Document.write('hi')
+    //     var data = $(this).val().base64file(); // it is not a plugin is just an example
+    //     alert(data);
+    //   });

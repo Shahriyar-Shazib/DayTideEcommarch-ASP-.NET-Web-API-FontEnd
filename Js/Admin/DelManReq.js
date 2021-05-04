@@ -8,6 +8,9 @@ $(document).ready(function(){
     {
     $.ajax({
         url:"http://localhost:2293//api/Admin/Deleverymanlist",
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -34,6 +37,10 @@ $(document).ready(function(){
                     $("#processDellist tbody").html(str);
 
                 }
+                else if(xmlhttp.status==401)
+                {
+                    window.location="../../Views/Login/index.html";
+                }
 
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
@@ -52,6 +59,9 @@ function accept(id)
         $.ajax({
             url:"http://localhost:2293//api/Admin/DeleteDelSignup?id="+id,
             method:'DELETE',
+            headers:{
+                "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+            },
             complete: function(xmlhttp,status){
                 {
                     
@@ -59,6 +69,10 @@ function accept(id)
                     {
                        
                         window.location = '../../Views/Admin/DelManReq.html';
+                    }
+                    else if(xmlhttp.status==401)
+                    {
+                        window.location="../../Views/Login/index.html";
                     }
     
                     else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);

@@ -10,6 +10,9 @@ $(document).ready(function(){
         $("#uname").text(getCookie("userid"))
     $.ajax({
         url:"http://localhost:2293//api/Admin/Adprofile?id="+getCookie("userid"),
+        headers:{
+            "Authorization":"Basic "+btoa(getCookie("Type")+":"+getCookie("userid")+":"+getCookie("pass"))
+        },
         complete: function(xmlhttp,status){
             {
                 
@@ -19,12 +22,12 @@ $(document).ready(function(){
                    
                     var data=xmlhttp.responseJSON;
                    // document.write(data.name);
-                    
-                        
+                    var src="data:image/png; base64"
+                    //document.write(src)
+                 //<img src="data:image/png;base64,">
                            // document.write(data.links)
                             str+="<tr><td>"
-                            str+="   <img class='img-profile ' style='height: 400px; width: 450px; margin-left: 40px ;";
-                            str+="       src='~/Content/Users/"+data.picture+"'>" ;
+                            str+="   <img  style='height: 400px; width: 450px; margin-left: 40px ; src='"+src+","+data.picture+"'>" ;
                             str+="</td>"
 
                             str+="<td><dl style ='margin-left:30px'class='dl-horizontal'>";
@@ -60,7 +63,9 @@ $(document).ready(function(){
                     $("#detailadmin").html(str);
   
                 }
-                
+                else if(xmlhttp.status==401){
+                    window.location="../../Views/Login/index.html"
+                }
             
                 else $("#msg").html(xmlhttp.status+":"+xmlhttp.statusText);
             }
